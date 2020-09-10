@@ -1,0 +1,19 @@
+ARG CENTOS_VERSION=7
+ARG ECLIPSE_VERSION=2020-06
+
+FROM yitzikc/centos-cpp-eclipse-dev:centos-${CENTOS_VERSION}-ec-${ECLIPSE_VERSION}
+
+ARG USERNAME
+ARG UID
+ARG GID
+ARG HOMEDIR_BASE
+ARG USER_HOME
+ARG X_DISPLAY
+
+RUN yum install -y sudo && echo "%wheel    ALL=(ALL)    NOPASSWD: ALL" > /etc/sudoers.d/wheel_nopasswd
+RUN adduser -u $UID -g $GID $USERNAME && usermod -aG wheel $USERNAME
+USER $USERNAME
+VOLUME $HOMEDIR_BASE
+ENV DISPLAY=${X_DISPLAY}
+ENV HOME=${USER_HOME}
+WORKDIR ${USER_HOME}
