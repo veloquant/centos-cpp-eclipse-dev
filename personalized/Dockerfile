@@ -10,8 +10,9 @@ ARG HOMEDIR_BASE
 ARG USER_HOME
 ARG X_DISPLAY
 
-RUN echo "%wheel    ALL=(ALL)    NOPASSWD: ALL" > /etc/sudoers.d/wheel_nopasswd
 RUN groupadd -o -f -g $GID $USERNAME && useradd -l -u $UID -g $GID $USERNAME && usermod -aG wheel $USERNAME
+RUN echo "%wheel    ALL=(ALL)    NOPASSWD: ALL" > /etc/sudoers.d/wheel_nopasswd
+
 USER $USERNAME
 VOLUME $HOMEDIR_BASE
 ENV DISPLAY=${X_DISPLAY}
