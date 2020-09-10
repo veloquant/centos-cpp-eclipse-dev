@@ -4,8 +4,9 @@ FROM centos:${CENTOS_VERSION}
 
 RUN yum update -y && \
     yum group install -y "Development Tools" && \
-    yum install -y python3 && \
-    yum group install -y "GNOME Desktop"
+    yum install -y sudo python3 && \
+    yum group install -y "GNOME Desktop" && \
+    yum clean -y all
 
 ARG ECLIPSE_VERSION=2020-06
 
