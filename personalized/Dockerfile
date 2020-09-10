@@ -11,7 +11,7 @@ ARG USER_HOME
 ARG X_DISPLAY
 
 RUN yum install -y sudo && echo "%wheel    ALL=(ALL)    NOPASSWD: ALL" > /etc/sudoers.d/wheel_nopasswd
-RUN adduser -u $UID -g $GID $USERNAME && usermod -aG wheel $USERNAME
+RUN groupadd -o -f -g $GID $USERNAME && useradd -l -u $UID -g $GID $USERNAME && usermod -aG wheel $USERNAME
 USER $USERNAME
 VOLUME $HOMEDIR_BASE
 ENV DISPLAY=${X_DISPLAY}
