@@ -18,5 +18,8 @@ ARG ECLIPSE_DOWNLOAD_BASE=http://mirror.dkm.cz/eclipse/technology/epp/downloads/
 
 WORKDIR /opt
 RUN curl -L $ECLIPSE_DOWNLOAD_URL ${ECLIPSE_DOWNLOAD_BASE}${ECLIPSE_VERSION}/${ECLIPSE_BUILD}/eclipse-cpp-${ECLIPSE_VERSION}-${ECLIPSE_BUILD}-linux-gtk-x86_64.tar.gz | tar xfz -
+ENV PATH $PATH:/opt/eclipse
 
 WORKDIR /root
+LABEL org.eclipse.version ${ECLIPSE_VERSION}
+LABEL org.eclipse.build ${ECLIPSE_BUILD}
