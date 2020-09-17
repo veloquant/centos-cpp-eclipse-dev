@@ -1,0 +1,9 @@
+#!/bin/bash
+
+CENTOS_SPEC=`echo $DOCKER_TAG | grep -oP 'centos\-[\d\.]+'`
+if [ -z $CENTOS_SPEC ] ; then
+    docker build -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+else
+    CENTOS_VERSION=`echo $CENTOS_SPEC | cut -d- -f2`
+    docker build --build-arg CENTOS_VERSION=$CENTOS_VERSION -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+fi
