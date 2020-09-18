@@ -1,0 +1,16 @@
+CENTOS_VERSION=`docker inspect $IMAGE_NAME -f '{{index (.ContainerConfig.Labels) "org.centos.version"}}'`
+ECLIPSE_VERSION=`docker inspect $IMAGE_NAME -f '{{index (.ContainerConfig.Labels) "org.eclipse.version"}}'`
+
+EXPECTED_TAG=centos-${CENTOS_VERSION}-ec-${ECLIPSE_VERSION}
+
+if [ "$EXPECTED_TAG" != "$DOCKER_TAG" ] ; then
+    docker tag $IMAGE_NAME ${DOCKER_REPO}:${EXPECTED_TAG}
+    docker push ${DOCKER_REPO}:${EXPECTED_TAG}
+fi
+
+CENTOS_VERSION_SHORT=`echo $CENTOS_VERSION | cut -d. -f1-2`
+EXPECTED_SHORT_TAG=centos-${CENTOS_VERSION_SHORT}-ec-${ECLIPSE_VERSION}
+if [ "$EXPECTED_TAG" != "$EXPECTED_SHORT_TAG" ] ; then
+    docker tag ${DOCKER_REPO}:${EXPECTED_TAG} ${DOCKER_REPO}:${EXPECTED_SHORT_TAG}
+    docker push ${DOCKER_REPO}:${EXPECTED_SHORT_TAG}
+fi
